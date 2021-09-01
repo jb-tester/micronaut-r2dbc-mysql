@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.mytests.micronaut
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [ annotation-api, app-name, data, data-r2dbc, flyway, http-client, java, java-application, junit, logback, maven, mysql, netty-server, r2dbc, readme, shade, testcontainers, yaml ]

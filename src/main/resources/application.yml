@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: micronautR2dbcMysql
+flyway:
+  datasources:
+    default:
+      enabled: true    
+r2dbc:
+  datasources:
+    default:
+      schema-generate: CREATE_DROP
+      dialect: MYSQL
+      url: r2dbc:mysql://unit-359.labs.intellij.net:3306/jbtests?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      username: irina
+      password: jolt
