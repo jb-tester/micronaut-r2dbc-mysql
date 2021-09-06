@@ -19,7 +19,7 @@
         <release.version>11</release.version>
         <micronaut.version>3.0.0</micronaut.version>
         <exec.mainClass>com.mytests.micronaut.Application</exec.mainClass>
-        <micronaut.data.version>3.0.0</micronaut.data.version>
+        <micronaut.data.version>3.0.1</micronaut.data.version>
         <micronaut.runtime>netty</micronaut.runtime>
     </properties>
 

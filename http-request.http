@@ -1,0 +1,32 @@
+
+###
+POST http://localhost:8080/authors
+
+
+###
+POST http://localhost:8080/books
+
+###
+GET http://localhost:8080/authors
+
+
+###
+GET http://localhost:8080/books
+
+
+###
+GET http://localhost:8080/books/2
+
+
+
+###
+DELETE http://localhost:8080/books/1
+
+
+
+###
+GET http://localhost:8080/authors/2
+
+
+
+###

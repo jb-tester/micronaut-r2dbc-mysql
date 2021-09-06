@@ -20,10 +20,10 @@ public class AuthorService {
     @Transactional 
     Mono<Void> setupData() {
         return Mono.from(authorRepository.save(new Author("Lev Tolstoy")))
-                .flatMapMany((author -> bookRepository.saveAll(Arrays.asList(
+                .flatMapMany(author -> bookRepository.saveAll(Arrays.asList(
                         new Book("Anna Karenina", 1000, author),
                         new Book("War And Peace", 4000, author)
-                ))))
+                )))
                 .then(Mono.from(authorRepository.save(new Author("Fedor Dostoyevsky"))))
                 .flatMapMany((author ->
                         bookRepository.save(new Book("Idiot", 500, author))

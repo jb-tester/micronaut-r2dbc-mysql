@@ -5,50 +5,48 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Put;
-import io.reactivex.Flowable;
-import io.reactivex.Single;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Controller("/books")
 public class BookController {
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
-     
+
+    @Transactional
     @Post("/")
-    Single<Book> create(@Valid Book book) {
-        return Single.fromPublisher(bookRepository.save(book));
+    Mono<Book> create() {
+        return Mono.from(
+                Mono.from(authorRepository.save(new Author("Anton Chekhov")))
+                        .flatMapMany(author -> bookRepository.save(new Book("Three Sisters", 50, author))));
+
     }
-    
-   
-   @Get("/")
-   List<Book> all() {
-       return bookRepository.findAll().collectList().block(); 
-   }
+
+
+    @Get("/")
+    List<Book> all() {
+        return bookRepository.findAll().collectList().block();
+    }
 
     @Get("/{id}")
-    Single<Book> show(Long id) {
-        return Single.fromPublisher(bookRepository.findById(id)); 
+    Mono<Book> show(Long id) {
+        return Mono.from(bookRepository.findById(id));
     }
-    
-    @Put("/{id}")
-    Single<Book> update(@NotNull Long id, @Valid Book book) {
-        return Single.fromPublisher(bookRepository.update(book));
-    }
-    
+
+
     @Delete("/{id}")
-    Single<HttpResponse<?>> delete(@NotNull Long id) {
-        return Single.fromPublisher(bookRepository.deleteById(id))
+    Mono<HttpResponse<?>> delete(@NotNull Long id) {
+        return Mono.from(bookRepository.deleteById(id))
                 .map(deleted -> deleted > 0 ? HttpResponse.noContent() : HttpResponse.notFound());
     }
-    
+
 }

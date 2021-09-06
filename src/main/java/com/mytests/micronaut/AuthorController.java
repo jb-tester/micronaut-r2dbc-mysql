@@ -4,7 +4,6 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 import reactor.core.publisher.Mono;
 
 @Controller("/authors")
@@ -25,8 +24,8 @@ public class AuthorController {
         return Flowable.fromPublisher(repository.findAll());
     }
 
-    @Get("/id")
-    Single<Author> get(Long id) { 
-        return Single.fromPublisher(repository.findById(id));
+    @Get("/{id}")
+    Author get(Long id) { 
+        return Mono.from(repository.findById(id)).block();
     }
 }
