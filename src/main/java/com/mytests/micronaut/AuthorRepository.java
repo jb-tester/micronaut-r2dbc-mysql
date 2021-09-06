@@ -4,6 +4,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.r2dbc.annotation.R2dbcRepository;
 import io.micronaut.data.repository.reactive.ReactiveStreamsCrudRepository;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public interface AuthorRepository extends ReactiveStreamsCrudRepository<Author, Long> {
     @NonNull
     @Override
-    Mono<Author> findById(@NonNull @NotNull Long aLong); 
+    Publisher<Author> findById(@NonNull @NotNull Long aLong); 
 
     @NonNull
     @Override
