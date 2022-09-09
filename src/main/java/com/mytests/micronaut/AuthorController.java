@@ -3,7 +3,8 @@ package com.mytests.micronaut;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.reactivex.Flowable;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller("/authors")
@@ -14,7 +15,7 @@ public class AuthorController {
         this.repository = repository;
         this.service = service;
     }
-    @Post
+    /*@Post
     Flowable<Void> setUp(){
         return Flowable.fromPublisher(service.setupData());
     }
@@ -22,6 +23,15 @@ public class AuthorController {
     Flowable<Author> all() { 
         
         return Flowable.fromPublisher(repository.findAll());
+    }*/
+    @Post
+    Mono<Void> setUp(){
+        return service.setupData();
+    }
+    @Get
+    Flux<Author> all() {
+
+        return repository.findAll();
     }
 
     @Get("/{id}")

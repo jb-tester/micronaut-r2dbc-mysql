@@ -10,17 +10,18 @@
     <parent>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.6.2</version>
     </parent>
 
     <properties>
         <packaging>jar</packaging>
         <jdk.version>11</jdk.version>
         <release.version>11</release.version>
-        <micronaut.version>3.0.0</micronaut.version>
-        <exec.mainClass>com.mytests.micronaut.Application</exec.mainClass>
-        <micronaut.data.version>3.0.1</micronaut.data.version>
+        <micronaut.version>3.6.2</micronaut.version>
+        <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
         <micronaut.runtime>netty</micronaut.runtime>
+        <micronaut.data.version>3.7.3</micronaut.data.version>
+        <exec.mainClass>com.mytests.micronaut.Application</exec.mainClass>
     </properties>
 
     <repositories>
@@ -68,7 +69,7 @@
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-runtime</artifactId>
+            <artifactId>micronaut-jackson-databind</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -77,18 +78,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.flyway</groupId>
-            <artifactId>micronaut-flyway</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.r2dbc</groupId>
-            <artifactId>micronaut-r2dbc-core</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -100,26 +91,6 @@
             <groupId>dev.miku</groupId>
             <artifactId>r2dbc-mysql</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>r2dbc</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -137,16 +108,31 @@
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
 
-                    <annotationProcessorPaths combine.children="append">
+                    <annotationProcessorPaths combine.self="override">
                         <path>
                             <groupId>io.micronaut</groupId>
-                            <artifactId>micronaut-http-validation</artifactId>
+                            <artifactId>micronaut-inject-java</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
                         <path>
                             <groupId>io.micronaut.data</groupId>
                             <artifactId>micronaut-data-processor</artifactId>
                             <version>${micronaut.data.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-graal</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-http-validation</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-validation</artifactId>
+                            <version>${micronaut.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
